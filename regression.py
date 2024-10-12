@@ -39,7 +39,7 @@ api_key = os.getenv('API_KEY')
 symbol = input("Entrez le symbole de l'action: ")
 api_url = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol="+symbol+"&outputsize=full&apikey="+api_key;
 resultat = get_api_data(api_url)
-
+nb_of_day = 700
 if resultat:
     print("Données récupérées avec succès:")
     print(json.dumps(resultat, indent=2))  # Affiche les données JSON de manière formatée
@@ -54,7 +54,7 @@ time_series = resultat['Time Series (Daily)']
 dates = []
 prices = []
 
-for date, values in list(time_series.items())[:365]:
+for date, values in list(time_series.items())[:nb_of_day]:
     dates.append(datetime.strptime(date, '%Y-%m-%d').toordinal())
     prices.append(float(values['4. close']))
 
